@@ -1,20 +1,7 @@
-import { defineConfig } from "vite";
-import babel from "vite-plugin-babel";
-import { reactRouter } from "@react-router/dev/vite";
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
 
-const ReactCompilerConfig = { /* ... */ };
-
+// https://vite.dev/config/
 export default defineConfig({
-  plugins: [
-    reactRouter(),
-    babel({
-      filter: /\.[jt]sx?$/,
-      babelConfig: {
-        presets: ["@babel/preset-typescript"], // if you use TypeScript
-        plugins: [
-          ["babel-plugin-react-compiler", ReactCompilerConfig],
-        ],
-      },
-    }),
-  ],
-});
+  plugins: [react()],
+})
