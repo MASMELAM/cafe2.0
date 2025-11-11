@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import useMousePosition from '../hooks/useMousePosition';
-import background from '../assets/backgroundimage.png';
+import background from '../assets/backgroundimage.jpg';
 
 // speed and sensitivity
 const PAN_SPEED = 2;
