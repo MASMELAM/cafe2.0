@@ -2,11 +2,9 @@ import React, { useState, useEffect, useRef } from 'react';
 import useMousePosition from '../hooks/useMousePosition';
 import background from '../assets/backgroundimage.jpg';
 import textBubble from '../assets/textbubble.png';
-import cat1 from '../assets/cat1.png';
-import cat2 from '../assets/cat2.png';
-import cat3 from '../assets/cat3.png';
-import cat4 from '../assets/cat4.png';
-import cat5 from '../assets/cat5.png';
+import catImg from '../assets/cat.png';
+import mouthOpen from '../assets/mouthopen.png';
+import mouthClosed from '../assets/mouthclosed.png';
 
 export default function Game() {
   const mouse = useMousePosition();
@@ -32,6 +30,9 @@ export default function Game() {
   // prevents repeat-trigger while holding on edge
   const [canMove, setCanMove] = useState(true);
 
+  // mouth state
+  const [mouthOpenState, setMouthOpenState] = useState(true);
+
   // moves camera to new section smoothly
   const moveToSection = (newCol, newRow) => {
     const clampedCol = Math.max(0, Math.min(TOTAL_COLS - 1, newCol));
@@ -43,6 +44,7 @@ export default function Game() {
     setOffsetY(-clampedRow * SECTION_HEIGHT);
   };
 
+  // edge movement
   useEffect(() => {
     if (!canMove) {
       // wait until cursor leaves edge before allowing another move
@@ -72,6 +74,21 @@ export default function Game() {
     }
   }, [mouse, canMove, col, row]);
 
+  // mouth toggle effect
+  useEffect(() => {
+    let timeout;
+
+    const toggleMouth = () => {
+      setMouthOpenState((prev) => !prev);
+      const nextTime = Math.random() * 9000 + 1000; // 1-10 seconds
+      timeout = setTimeout(toggleMouth, nextTime);
+    };
+
+    toggleMouth();
+
+    return () => clearTimeout(timeout);
+  }, []);
+
   return (
     <div
       style={{
@@ -96,7 +113,6 @@ export default function Game() {
           left: 0,
         }}
       >
-        {/*section labels for clarity */}
         {[...Array(TOTAL_ROWS * TOTAL_COLS)].map((_, i) => {
           const r = Math.floor(i / TOTAL_COLS);
           const c = i % TOTAL_COLS;
@@ -121,19 +137,52 @@ export default function Game() {
             >
               Section {sectionNumber}
 
-              {/* show the text bubble only in Section 3 */}
+              {/* Section 3: Cat, Mouth, Text Bubble */}
               {sectionNumber === 3 && (
-                <img
-                  src={textBubble}
-                  alt="Text Bubble"
-                  style={{
-                    position: 'absolute',
-                    top: '400px',     // adjust the up/down of the text bubble
-                    left: '250px',    // adjust the left/right of text bubble
-                    width: '1100px',   // tweak the size of text bubble
-                    height: 'auto',
-                  }}
-                />
+                <>
+                  {/* Cat */}
+                  <img
+                    src={catImg}
+                    alt="Cat"
+                    style={{
+                      position: 'absolute',
+                      top: '130px',
+                      left: '50%',
+                      transform: 'translateX(-50%)',
+                      width: '400px',
+                      height: 'auto',
+                    }}
+                  />
+
+                  {/* Mouth overlay */}
+                  <img
+                    src={mouthOpenState ? mouthOpen : mouthClosed}
+                    alt="Mouth"
+                    style={{
+                      position: 'absolute',
+                      top: '200px', // adjust to fit cat's face
+                      left: '50%',
+                      transform: 'translateX(-50%)',
+                      width: '250px',
+                      height: 'auto',
+                      pointerEvents: 'none',
+                    }}
+                  />
+
+                  {/* Text Bubble */}
+                  <img
+                    src={textBubble}
+                    alt="Text Bubble"
+                    style={{
+                      position: 'absolute',
+                      top: '400px',
+                      left: '50%',
+                      transform: 'translateX(-50%)',
+                      width: '1100px',
+                      height: 'auto',
+                    }}
+                  />
+                </>
               )}
             </div>
           );
@@ -142,4 +191,3 @@ export default function Game() {
     </div>
   );
 }
-// TEST TEST TEST //
