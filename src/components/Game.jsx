@@ -2,6 +2,11 @@ import React, { useState, useEffect, useRef } from 'react';
 import useMousePosition from '../hooks/useMousePosition';
 import background from '../assets/backgroundimage.jpg';
 import textBubble from '../assets/textbubble.png';
+import cat1 from '../assets/cat1.png';
+import cat2 from '../assets/cat2.png';
+import cat3 from '../assets/cat3.png';
+import cat4 from '../assets/cat4.png';
+import cat5 from '../assets/cat5.png';
 
 export default function Game() {
   const mouse = useMousePosition();
