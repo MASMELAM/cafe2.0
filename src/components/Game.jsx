@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import useMousePosition from '../hooks/useMousePosition';
 import background from '../assets/backgroundimage.jpg';
+import textBubble from '../assets/textbubble.png';
 
 export default function Game() {
   const mouse = useMousePosition();
@@ -90,10 +91,12 @@ export default function Game() {
           left: 0,
         }}
       >
-        {/* Optional: section labels for clarity */}
+        {/*section labels for clarity */}
         {[...Array(TOTAL_ROWS * TOTAL_COLS)].map((_, i) => {
           const r = Math.floor(i / TOTAL_COLS);
           const c = i % TOTAL_COLS;
+          const sectionNumber = i + 1;
+
           return (
             <div
               key={i}
@@ -111,7 +114,22 @@ export default function Game() {
                 textShadow: '2px 2px 4px black',
               }}
             >
-              Section {i + 1}
+              Section {sectionNumber}
+
+              {/* show the text bubble only in Section 3 */}
+              {sectionNumber === 3 && (
+                <img
+                  src={textBubble}
+                  alt="Text Bubble"
+                  style={{
+                    position: 'absolute',
+                    top: '400px',     // adjust the up/down of the text bubble
+                    left: '250px',    // adjust the left/right of text bubble
+                    width: '1100px',   // tweak the size of text bubble
+                    height: 'auto',
+                  }}
+                />
+              )}
             </div>
           );
         })}
