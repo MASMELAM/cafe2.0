@@ -4,15 +4,19 @@ import viteLogo from '/vite.svg'
 import React from 'react';
 import './App.css'
 import Game from './components/Game.jsx';
+import Menu from './components/Menu.jsx';
+
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [count, setCount] = useState(false)
 
   return (
     <>
-      <div className="App">
+      {!count ? <Menu onStart={() => setCount(true)} /> : <Game />}
+
+      {/* <div className="App">
         <Game />
-      </div>
+      </div> */}
     </>
   )
 }
