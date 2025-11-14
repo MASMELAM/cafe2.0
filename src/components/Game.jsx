@@ -44,15 +44,18 @@ export default function Game() {
     setOffsetY(-clampedRow * SECTION_HEIGHT);
   };
 
+  // edge movement with threshold and disgonal support
+  const EDGE_THRESHOLD = 50; // number of pixels from edge to trigger panning
+
   // edge movement
   useEffect(() => {
     if (!canMove) {
       // wait until cursor leaves edge before allowing another move
       if (
-        mouse.x > 0 &&
-        mouse.x < window.innerWidth - 1 &&
-        mouse.y > 0 &&
-        mouse.y < window.innerHeight - 1
+        mouse.x > EDGE_THRESHOLD &&
+        mouse.x < window.innerWidth - EDGE_THRESHOLD &&
+        mouse.y > EDGE_THRESHOLD &&
+        mouse.y < window.innerHeight - EDGE_THRESHOLD
       ) {
         setCanMove(true);
       }
@@ -63,10 +66,10 @@ export default function Game() {
     let moveV = 0;
 
     // detect edge touches
-    if (mouse.x <= 0) moveH = -1; // left edge
-    if (mouse.x >= window.innerWidth - 1) moveH = 1; // right edge
-    if (mouse.y <= 0) moveV = -1; // top edge
-    if (mouse.y >= window.innerHeight - 1) moveV = 1; // bottom edge
+    if (mouse.x <= EDGE_THRESHOLD) moveH = -1; // left edge
+    if (mouse.x >= window.innerWidth - EDGE_THRESHOLD) moveH = 1; // right edge
+    if (mouse.y <= EDGE_THRESHOLD) moveV = -1; // top edge
+    if (mouse.y >= window.innerHeight - EDGE_THRESHOLD) moveV = 1; // bottom edge
 
     if (moveH !== 0 || moveV !== 0) {
       moveToSection(col + moveH, row + moveV);
