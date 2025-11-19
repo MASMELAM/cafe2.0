@@ -17,7 +17,7 @@ export default function useTypewriter(text, speed = 50) {
                 clearInterval(interval);
             }
         }, speed);
-        return () => clearInterval(inverval);
+        return () => clearInterval(interval);
     }, [text, speed]);
     return displayedText;
 }
