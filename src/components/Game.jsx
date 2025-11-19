@@ -5,6 +5,7 @@ import textBubble from '../assets/textbubble.png';
 import catImg from '../assets/cat.png';
 import mouthOpen from '../assets/mouthopen.png';
 import mouthClosed from '../assets/mouthclosed.png';
+import menuBubbleImg from '../assets/menu_bubble.png';
 
 // ingredient images
 import bakingPowderImg from '../assets/baking_powder.png';
@@ -29,7 +30,30 @@ import sprinklesImg from '../assets/sprinkles.png';
 import sugarImg from '../assets/sugar.png';
 import vanillaExtractImg from '../assets/vanilla_extract.png';
 
+// import utinsils 
 import bowlImg from '../assets/bowl.png';
+import bakingTrayImg from '../assets/baking_tray.png';
+import knifeImg from '../assets/knife.png';
+import muffinTrayImg from '../assets/muffin_tray.png';
+import rollingPinImg from '../assets/rolling_pin.png';
+import woodenSpoonImg from '../assets/wooden_spoon.png';
+
+// import uncooked
+import bowlCinnamonRollsImg from '../assets/bowl_cinnamon_rolls.png';
+import bowlPeppermintImg from '../assets/bowl_peppermint_brownies.png';
+import bowlRedVelvetCupcakes from '../assets/bowl_redvelvet_cupcakes.png';
+import bowlSprinkleCookies from '../assets/bowl_sprinkle_cookies.png';
+import trayBrowniesImg from '../assets/tray_unbaked_brownies.png';
+import trayCinnamonRollsImg from '../assets/tray_unbaked_cinnamon_rolls.png';
+import trayCookiesImg from '../assets/tray_unbaked_cookies.png';
+import trayRedVelvetCupcakesImg from '../assets/tray_unbaked_redvelvet_cupcakes.png';
+
+// import cooked
+import finishedBrowniesImg from '../assets/finished_brownies.png';
+import finishedCinnamonRollsImg from '../assets/finished_cinnamon_rolls.png';
+import finishedRedVelvetCupcakesImg from '../assets/finished_redvelvet_cupcakes.png';
+import finishedSprinkleCookiesImg from '../assets/finished_sprinkle_cookies.png';
+
 
 export default function Game() {
   const mouse = useMousePosition();
