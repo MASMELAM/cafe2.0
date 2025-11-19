@@ -1,6 +1,7 @@
 import React from "react";
 import textBubble from "../assets/text-bubble.png";
 import { useTypewriter } from "react-simple-typewriter";
+
 export default function Instructions() {
     return (
     <div style={{ position: 'relative', ...style }}>
