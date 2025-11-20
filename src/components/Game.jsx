@@ -226,6 +226,18 @@ export default function Game() {
     return () => clearTimeout(timeout);
   }, []);
 
+  // formats camelCase into actual ingredient names
+  
+  const formatName = (name) => {
+    return name
+      .replace(/([A-Z])/g, ' $1')      
+      .replace(/\b(\d+)\b/g, ' $1') 
+      .replace(/\s+/g, ' ')           
+      .trim()
+      .replace(/^./, (c) => c.toUpperCase()); 
+  };
+
+
   // compute missing ingredients for current recipe
   const recipeList = RECIPES[currentRecipe];
   const missingIngredients = recipeList.filter(name => ! addedIngredients.includes(name));
@@ -397,7 +409,7 @@ export default function Game() {
                 alignItems: 'center',
                 fontSize: '3rem',
                 color: 'white',
-                textShadow: '2px 2px 4px black',
+                textShadow: 'none',
               }}
             >
               {/* Section 3: Cat, Mouth, Text Bubble */}
@@ -445,7 +457,7 @@ export default function Game() {
                   <div
                     style={{
                       position: 'absolute',
-                      top: '410px',
+                      top: '475px',
                       left: '50%',
                       transform: 'translateX(-50%)',
                       width: '980px',
@@ -488,14 +500,14 @@ export default function Game() {
                                 padding: '4px 8px',
                               }}
                             >
-                              {name}
+                              {formatName(name)}
                             </span>
                           ))}
                         </div>
                       </div>
                     ) : (
                       <div style={{ color: '#106b21', fontWeight: 700 }}>
-                        All ingredients added! 🎉
+                        All ingredients added!!
                       </div>
                     )}
                   </div>
