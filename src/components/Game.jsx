@@ -98,13 +98,13 @@ export default function Game() {
 
 
     // ----- Section 2: bottom shelf -----
-    { name: 'flour', img: flourImg, section: 2, x: 100, y: 200, width: 100, height: 100, addedToBowl: false, draggable: true, world: false },
-    { name: 'sugar', img: sugarImg, section: 2, x: 250, y: 200, width: 100, height: 100, addedToBowl: false, draggable: true, world: false },
-    { name: 'brownSugar', img: brownSugarImg, section: 2, x: 400, y: 200, width: 100, height: 100, addedToBowl: false, draggable: true, world: false },
-    { name: 'milk', img: milkImg, section: 2, x: 550, y: 200, width: 100, height: 100, addedToBowl: false, draggable: true, world: false },
-    { name: 'bakingPowder', img: bakingPowderImg, section: 2, x: 700, y: 200, width: 100, height: 100, addedToBowl: false, draggable: true, world: false },
-    { name: 'salt', img: saltImg, section: 2, x: 850, y: 200, width: 100, height: 100, addedToBowl: false, draggable: true, world: false },
-    { name: 'butter', img: butterImg, section: 2, x: 1000, y: 200, width: 100, height: 100, addedToBowl: false, draggable: true, world: false },
+    { name: 'flour', img: flourImg, section: 2, x: 125, y: 195, width: 230, height: 200, addedToBowl: false, draggable: true, world: false },
+    { name: 'sugar', img: sugarImg, section: 2, x: 370, y: 210, width: 190, height: 180, addedToBowl: false, draggable: true, world: false },
+    { name: 'brownSugar', img: brownSugarImg, section: 2, x: 580, y: 210, width: 190, height: 180, addedToBowl: false, draggable: true, world: false },
+    { name: 'milk', img: milkImg, section: 2, x: 800, y: 190, width: 130, height: 210, addedToBowl: false, draggable: true, world: false },
+    { name: 'bakingPowder', img: bakingPowderImg, section: 2, x: 955, y: 295, width: 100, height: 100, addedToBowl: false, draggable: true, world: false },
+    { name: 'salt', img: saltImg, section: 2, x: 1065, y: 305, width: 70, height: 85, addedToBowl: false, draggable: true, world: false },
+    { name: 'butter', img: butterImg, section: 2, x: 1150, y: 285, width: 250, height: 110, addedToBowl: false, draggable: true, world: false },
 
     // ----- Wooden spoon next to bowl (draggable) -----
     {
