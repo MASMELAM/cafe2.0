@@ -121,15 +121,15 @@ export default function Game() {
     },
 
     // ----- Section 5: top shelf -----
-    { name: 'chocolateChips', img: chocolateChipsImg, section: 5, x: 100, y: 50, width: 100, height: 100, addedToBowl: false, draggable: true, world: false },
-    { name: 'crushedPeppermint', img: crushedPeppermintImg, section: 5, x: 400, y: 50, width: 100, height: 100, addedToBowl: false, draggable: true, world: false },
+    { name: 'chocolateChips', img: chocolateChipsImg, section: 5, x: 130, y: 230, width: 220, height: 220, addedToBowl: false, draggable: true, world: false },
+    { name: 'crushedPeppermint', img: crushedPeppermintImg, section: 5, x: 420, y: 285, width: 180, height: 160, addedToBowl: false, draggable: true, world: false },
 
     // ----- Section 5: bottom shelf -----
-    { name: 'bakingTray', img: bakingTrayImg, section: 5, x: 100, y: 200, width: 120, height: 100, addedToBowl: false, draggable: true, world: false },
+    { name: 'bakingTray', img: bakingTrayImg, section: 5, x: 130, y: 550, width: 330, height: 170, addedToBowl: false, draggable: true, world: false },
     // slightly overlapping the baking tray:
-    { name: 'muffinTray', img: muffinTrayImg, section: 5, x: 150, y: 180, width: 110, height: 90, addedToBowl: false, draggable: true, world: false },
-    { name: 'rollingPin', img: rollingPinImg, section: 5, x: 300, y: 200, width: 140, height: 80, addedToBowl: false, draggable: true, world: false },
-    { name: 'knife', img: knifeImg, section: 5, x: 470, y: 200, width: 120, height: 80, addedToBowl: false, draggable: true, world: false },
+    { name: 'muffinTray', img: muffinTrayImg, section: 5, x: 162, y: 540, width: 270, height: 100, addedToBowl: false, draggable: true, world: false },
+    { name: 'rollingPin', img: rollingPinImg, section: 5, x: 500, y: 600, width: 360, height: 80, addedToBowl: false, draggable: true, world: false },
+    { name: 'knife', img: knifeImg, section: 5, x: 900, y: 580, width: 320, height: 80, addedToBowl: false, draggable: true, world: false },
   ]);
 
   const [col, setCol] = useState(0);
