@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import useMousePosition from '../hooks/useMousePosition';
+
 import background from '../assets/backgroundimage.jpg';
 import textBubble from '../assets/textbubble.png';
 import catImg from '../assets/cat.png';
@@ -30,7 +31,7 @@ import sprinklesImg from '../assets/sprinkles.png';
 import sugarImg from '../assets/sugar.png';
 import vanillaExtractImg from '../assets/vanilla_extract.png';
 
-// import utinsils 
+// utensils
 import bowlImg from '../assets/bowl.png';
 import bakingTrayImg from '../assets/baking_tray.png';
 import knifeImg from '../assets/knife.png';
@@ -38,7 +39,7 @@ import muffinTrayImg from '../assets/muffin_tray.png';
 import rollingPinImg from '../assets/rolling_pin.png';
 import woodenSpoonImg from '../assets/wooden_spoon.png';
 
-// import uncooked
+// uncooked bowls / trays (currently unused in this snippet, keeping imports)
 import bowlCinnamonRollsImg from '../assets/bowl_cinnamon_rolls.png';
 import bowlPeppermintImg from '../assets/bowl_peppermint_brownies.png';
 import bowlRedVelvetCupcakes from '../assets/bowl_redvelvet_cupcakes.png';
@@ -48,17 +49,17 @@ import trayCinnamonRollsImg from '../assets/tray_unbaked_cinnamon_rolls.png';
 import trayCookiesImg from '../assets/tray_unbaked_cookies.png';
 import trayRedVelvetCupcakesImg from '../assets/tray_unbaked_redvelvet_cupcakes.png';
 
-// import cooked
+// cooked (also unused here, keeping imports)
 import finishedBrowniesImg from '../assets/finished_brownies.png';
 import finishedCinnamonRollsImg from '../assets/finished_cinnamon_rolls.png';
 import finishedRedVelvetCupcakesImg from '../assets/finished_redvelvet_cupcakes.png';
 import finishedSprinkleCookiesImg from '../assets/finished_sprinkle_cookies.png';
 
-
 export default function Game() {
   const mouse = useMousePosition();
   const containerRef = useRef(null);
 
+  // Layout
   const SECTION_WIDTH = window.innerWidth;
   const SECTION_HEIGHT = window.innerHeight;
 
@@ -68,45 +69,68 @@ export default function Game() {
   const WORLD_WIDTH = TOTAL_COLS * SECTION_WIDTH;
   const WORLD_HEIGHT = TOTAL_ROWS * SECTION_HEIGHT;
 
-  // ingredients: x,y are LOCAL (within section) until dragged
-  const [ingredients, setIngredients] = useState([
-    // Section 2 top shelf
-    { name: 'eggTray', img: eggTrayImg, section: 2, x: 100, y: 50, addedToBowl: false, draggable: false, world: false },
-    { name: 'egg1', img: egg1Img, section: 2, x: 140, y: 60, addedToBowl: false, draggable: true, world: false },
-    { name: 'egg2', img: egg2Img, section: 2, x: 190, y: 60, addedToBowl: false, draggable: true, world: false },
-    { name: 'egg3', img: egg3Img, section: 2, x: 240, y: 60, addedToBowl: false, draggable: true, world: false },
-    { name: 'egg4', img: egg4Img, section: 2, x: 290, y: 60, addedToBowl: false, draggable: true, world: false },
-
-    { name: 'creamCheese', img: creamCheeseImg, section: 2, x: 400, y: 50, addedToBowl: false, draggable: true, world: false },
-    { name: 'peppermintExtract', img: peppermintExtractImg, section: 2, x: 550, y: 50, addedToBowl: false, draggable: true, world: false },
-    { name: 'redDye', img: redDyeImg, section: 2, x: 700, y: 50, addedToBowl: false, draggable: true, world: false },
-    { name: 'vanillaExtract', img: vanillaExtractImg, section: 2, x: 850, y: 50, addedToBowl: false, draggable: true, world: false },
-    { name: 'cocoaPowder', img: cocoaPowderImg, section: 2, x: 1000, y: 50, addedToBowl: false, draggable: true, world: false },
-    { name: 'cinnamonSticks', img: cinnamonSticksImg, section: 2, x: 1150, y: 50, addedToBowl: false, draggable: true, world: false },
-
-    // Section 2 bottom shelf
-    { name: 'flour', img: flourImg, section: 2, x: 100, y: 200, addedToBowl: false, draggable: true, world: false },
-    { name: 'sugar', img: sugarImg, section: 2, x: 250, y: 200, addedToBowl: false, draggable: true, world: false },
-    { name: 'brownSugar', img: brownSugarImg, section: 2, x: 400, y: 200, addedToBowl: false, draggable: true, world: false },
-    { name: 'butter', img: butterImg, section: 2, x: 550, y: 200, addedToBowl: false, draggable: true, world: false },
-    { name: 'bakingPowder', img: bakingPowderImg, section: 2, x: 700, y: 200, addedToBowl: false, draggable: true, world: false },
-    { name: 'salt', img: saltImg, section: 2, x: 850, y: 200, addedToBowl: false, draggable: true, world: false },
-
-    // Section 5 shelf
-    { name: 'chocolateChips', img: chocolateChipsImg, section: 5, x: 100, y: 50, addedToBowl: false, draggable: true, world: false },
-    { name: 'sprinkles', img: sprinklesImg, section: 5, x: 250, y: 50, addedToBowl: false, draggable: true, world: false },
-    { name: 'crushedPeppermint', img: crushedPeppermintImg, section: 5, x: 400, y: 50, addedToBowl: false, draggable: true, world: false },
-  ]);
-
-  // bowl object
+  // Bowl object
   const [bowl, setBowl] = useState({
     img: bowlImg,
-    section: 2,
+    section: 2, // middle-left? (since sections are 1..6 laid Left->Right, Top->Bottom)
     x: SECTION_WIDTH / 2 - 50,
     y: SECTION_HEIGHT - 150,
     width: 100,
     height: 100,
   });
+
+  // Ingredients (including utensils you want draggable)
+  // NOTE: Each item now has width/height so you can adjust per-item easily.
+  const [ingredients, setIngredients] = useState([
+    // ----- Section 2: top shelf -----
+    { name: 'eggTray', img: eggTrayImg, section: 2, x: 100, y: 60, width: 300, height: 100, addedToBowl: false, draggable: false, world: false },
+    { name: 'egg1', img: egg1Img, section: 2, x: 100, y: 60, width: 300, height: 100, addedToBowl: false, draggable: true, world: false },
+    { name: 'egg2', img: egg2Img, section: 2, x: 100, y: 60, width: 300, height: 100, addedToBowl: false, draggable: true, world: false },
+    { name: 'egg3', img: egg3Img, section: 2, x: 100, y: 60, width: 300, height: 100, addedToBowl: false, draggable: true, world: false },
+    { name: 'egg4', img: egg4Img, section: 2, x: 100, y: 60, width: 300, height: 100, addedToBowl: false, draggable: true, world: false },
+    { name: 'creamCheese', img: creamCheeseImg, section: 2, x: 425, y: 50, width: 250, height: 115, addedToBowl: false, draggable: true, world: false },
+    { name: 'peppermintExtract', img: peppermintExtractImg, section: 2, x: 700, y: 90, width: 40, height: 65, addedToBowl: false, draggable: true, world: false },
+    { name: 'redDye', img: redDyeImg, section: 2, x: 755, y: 85, width: 40, height: 70, addedToBowl: false, draggable: true, world: false },
+    { name: 'vanillaExtract', img: vanillaExtractImg, section: 2, x: 815, y: 20, width: 70, height: 140, addedToBowl: false, draggable: true, world: false },
+    { name: 'cocoaPowder', img: cocoaPowderImg, section: 2, x: 910, y: 40, width: 180, height: 125, addedToBowl: false, draggable: true, world: false },
+    { name: 'cinnamonSticks', img: cinnamonSticksImg, section: 2, x: 1100, y: 40, width: 200, height: 120, addedToBowl: false, draggable: true, world: false },
+    { name: 'sprinkles', img: sprinklesImg, section: 2, x: 1315, y: 70, width: 70, height: 90, addedToBowl: false, draggable: true, world: false },
+
+
+    // ----- Section 2: bottom shelf -----
+    { name: 'flour', img: flourImg, section: 2, x: 100, y: 200, width: 100, height: 100, addedToBowl: false, draggable: true, world: false },
+    { name: 'sugar', img: sugarImg, section: 2, x: 250, y: 200, width: 100, height: 100, addedToBowl: false, draggable: true, world: false },
+    { name: 'brownSugar', img: brownSugarImg, section: 2, x: 400, y: 200, width: 100, height: 100, addedToBowl: false, draggable: true, world: false },
+    { name: 'milk', img: milkImg, section: 2, x: 550, y: 200, width: 100, height: 100, addedToBowl: false, draggable: true, world: false },
+    { name: 'bakingPowder', img: bakingPowderImg, section: 2, x: 700, y: 200, width: 100, height: 100, addedToBowl: false, draggable: true, world: false },
+    { name: 'salt', img: saltImg, section: 2, x: 850, y: 200, width: 100, height: 100, addedToBowl: false, draggable: true, world: false },
+    { name: 'butter', img: butterImg, section: 2, x: 1000, y: 200, width: 100, height: 100, addedToBowl: false, draggable: true, world: false },
+
+    // ----- Wooden spoon next to bowl (draggable) -----
+    {
+      name: 'woodenSpoon',
+      img: woodenSpoonImg,
+      section: 2,
+      x: SECTION_WIDTH / 2 + 80, // to the right of the bowl
+      y: SECTION_HEIGHT - 150,
+      width: 100,
+      height: 100,
+      addedToBowl: false,
+      draggable: true,
+      world: false,
+    },
+
+    // ----- Section 5: top shelf -----
+    { name: 'chocolateChips', img: chocolateChipsImg, section: 5, x: 100, y: 50, width: 100, height: 100, addedToBowl: false, draggable: true, world: false },
+    { name: 'crushedPeppermint', img: crushedPeppermintImg, section: 5, x: 400, y: 50, width: 100, height: 100, addedToBowl: false, draggable: true, world: false },
+
+    // ----- Section 5: bottom shelf -----
+    { name: 'bakingTray', img: bakingTrayImg, section: 5, x: 100, y: 200, width: 120, height: 100, addedToBowl: false, draggable: true, world: false },
+    // slightly overlapping the baking tray:
+    { name: 'muffinTray', img: muffinTrayImg, section: 5, x: 150, y: 180, width: 110, height: 90, addedToBowl: false, draggable: true, world: false },
+    { name: 'rollingPin', img: rollingPinImg, section: 5, x: 300, y: 200, width: 140, height: 80, addedToBowl: false, draggable: true, world: false },
+    { name: 'knife', img: knifeImg, section: 5, x: 470, y: 200, width: 120, height: 80, addedToBowl: false, draggable: true, world: false },
+  ]);
 
   const [col, setCol] = useState(0);
   const [row, setRow] = useState(0);
@@ -116,13 +140,13 @@ export default function Game() {
   const [mouthOpenState, setMouthOpenState] = useState(true);
 
   // drag states
-  const [dragging, setDragging] = useState(null); // name of ingredient
+  const [dragging, setDragging] = useState(null); // name of ingredient being dragged
   const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
 
   // track added ingredients
   const [addedIngredients, setAddedIngredients] = useState([]);
 
-  // camera movement (unchanged)
+  // camera movement
   const moveToSection = (newCol, newRow) => {
     const clampedCol = Math.max(0, Math.min(TOTAL_COLS - 1, newCol));
     const clampedRow = Math.max(0, Math.min(TOTAL_ROWS - 1, newRow));
@@ -136,7 +160,9 @@ export default function Game() {
   const EDGE_THRESHOLD = 50;
 
   useEffect(() => {
-    if (!canMove) {
+    // Allow camera to move WHILE dragging (so you can carry items across sections).
+    // When not dragging, keep the original "safe zone to re-enable moves" behavior.
+    if (!dragging && !canMove) {
       if (
         mouse.x > EDGE_THRESHOLD &&
         mouse.x < window.innerWidth - EDGE_THRESHOLD &&
@@ -158,9 +184,10 @@ export default function Game() {
 
     if (moveH !== 0 || moveV !== 0) {
       moveToSection(col + moveH, row + moveV);
-      setCanMove(false);
+      // While dragging, don't lock movement—keep moving as edges are hit.
+      if (!dragging) setCanMove(false);
     }
-  }, [mouse, canMove, col, row]);
+  }, [mouse, canMove, col, row, dragging]);
 
   useEffect(() => {
     let timeout;
@@ -198,7 +225,9 @@ export default function Game() {
 
     // mark ingredient as world-mode so rendering uses world coords while dragging
     setIngredients((prev) =>
-      prev.map((it) => (it.name === name ? { ...it, x: worldX, y: worldY, world: true } : it))
+      prev.map((it) =>
+        it.name === name ? { ...it, x: worldX, y: worldY, world: true } : it
+      )
     );
 
     // set dragging and offset in world-space
@@ -206,7 +235,6 @@ export default function Game() {
     setDragging(name);
   };
 
-  // pointer move attached to top-level div so it works while dragging
   const handlePointerMove = (e) => {
     if (!dragging) return;
     const pointerWorldX = e.clientX - offsetX;
@@ -215,7 +243,12 @@ export default function Game() {
     setIngredients((prev) =>
       prev.map((it) =>
         it.name === dragging && it.draggable
-          ? { ...it, x: pointerWorldX - dragOffset.x, y: pointerWorldY - dragOffset.y, world: true }
+          ? {
+              ...it,
+              x: pointerWorldX - dragOffset.x,
+              y: pointerWorldY - dragOffset.y,
+              world: true,
+            }
           : it
       )
     );
@@ -231,38 +264,46 @@ export default function Game() {
       return;
     }
 
-    // compute ingredient's world position (ing.x, ing.y)
+    // ingredient world position
     const ingWorldX = ing.x;
     const ingWorldY = ing.y;
 
     // bowl world pos
-    const bowlWorldX = bowl.x + ((bowl.section - 1) % TOTAL_COLS) * SECTION_WIDTH;
-    const bowlWorldY = bowl.y + Math.floor((bowl.section - 1) / TOTAL_COLS) * SECTION_HEIGHT;
+    const bowlWorldX =
+      bowl.x + ((bowl.section - 1) % TOTAL_COLS) * SECTION_WIDTH;
+    const bowlWorldY =
+      bowl.y + Math.floor((bowl.section - 1) / TOTAL_ROWS) * SECTION_HEIGHT;
     const bowlRight = bowlWorldX + bowl.width;
     const bowlBottom = bowlWorldY + bowl.height;
 
-    // simple collision: ingredient center inside bowl rectangle
-    const ingCenterX = ingWorldX + 50; // assume 100px width when rendered
-    const ingCenterY = ingWorldY + 50;
+    // collision: ingredient center inside bowl rectangle
+    const ingWidth = ing.width ?? 100;
+    const ingHeight = ing.height ?? 100;
+    const ingCenterX = ingWorldX + ingWidth / 2;
+    const ingCenterY = ingWorldY + ingHeight / 2;
 
-    if (ingCenterX >= bowlWorldX && ingCenterX <= bowlRight && ingCenterY >= bowlWorldY && ingCenterY <= bowlBottom) {
+    if (
+      ingCenterX >= bowlWorldX &&
+      ingCenterX <= bowlRight &&
+      ingCenterY >= bowlWorldY &&
+      ingCenterY <= bowlBottom
+    ) {
       // add to backend tracking
       setAddedIngredients((prev) => [...prev, ing.name]);
 
       // remove from ingredients (so it fully disappears)
       setIngredients((prev) => prev.filter((i) => i.name !== ing.name));
     } else {
-      // If not added, keep it in world mode at the dropped world coords.
-      // Optionally you could snap it back into section-local coords by computing new section,
-      // but leaving as world coords is fine and preserves where user dropped it.
-      setIngredients((prev) => prev.map((i) => (i.name === ing.name ? { ...i, world: true } : i)));
+      // Keep it in world mode at dropped coords (so it can live anywhere in the kitchen)
+      setIngredients((prev) =>
+        prev.map((i) => (i.name === ing.name ? { ...i, world: true } : i))
+      );
     }
 
     setDragging(null);
   };
 
-  // Attach pointer listeners only while dragging (we use top-level handlers on the container div too,
-  // but this ensures mouse-up outside the div also counts)
+  // Attach pointer listeners to window while dragging
   useEffect(() => {
     if (!dragging) return;
     const onPointerMove = (e) => handlePointerMove(e);
@@ -325,7 +366,6 @@ export default function Game() {
               }}
             >
               Section {sectionNumber}
-
               {/* Section 3: Cat, Mouth, Text Bubble */}
               {sectionNumber === 3 && (
                 <>
@@ -341,7 +381,6 @@ export default function Game() {
                       height: 'auto',
                     }}
                   />
-
                   <img
                     src={mouthOpenState ? mouthOpen : mouthClosed}
                     alt="Mouth"
@@ -355,7 +394,6 @@ export default function Game() {
                       pointerEvents: 'none',
                     }}
                   />
-
                   <img
                     src={textBubble}
                     alt="Text Bubble"
@@ -381,19 +419,21 @@ export default function Game() {
           style={{
             position: 'absolute',
             left: bowl.x + ((bowl.section - 1) % TOTAL_COLS) * SECTION_WIDTH,
-            top: bowl.y + Math.floor((bowl.section - 1) / TOTAL_COLS) * SECTION_HEIGHT,
+            top: bowl.y + Math.floor((bowl.section - 1) / TOTAL_ROWS) * SECTION_HEIGHT,
             width: bowl.width,
             height: bowl.height,
           }}
         />
 
-        {/* Ingredients */}
+        {/* Ingredients (and draggable utensils) */}
         {ingredients.map((i) => {
-          // skip added items (they're removed from list when added)
-          // render position depends on whether the item is in world mode or still section-local
           const isDragging = dragging === i.name;
-          const left = i.world ? i.x : i.x + ((i.section - 1) % TOTAL_COLS) * SECTION_WIDTH;
-          const top = i.world ? i.y : i.y + Math.floor((i.section - 1) / TOTAL_COLS) * SECTION_HEIGHT;
+          const left = i.world
+            ? i.x
+            : i.x + ((i.section - 1) % TOTAL_COLS) * SECTION_WIDTH;
+          const top = i.world
+            ? i.y
+            : i.y + Math.floor((i.section - 1) / TOTAL_COLS) * SECTION_HEIGHT;
 
           return (
             <img
@@ -403,10 +443,10 @@ export default function Game() {
               onPointerDown={(e) => handlePointerDown(e, i.name)}
               style={{
                 position: 'absolute',
-                left: left,
-                top: top,
-                width: 100,
-                height: 100,
+                left,
+                top,
+                width: i.width ?? 100,
+                height: i.height ?? 100,
                 cursor: i.draggable === false ? 'default' : 'grab',
                 zIndex: isDragging ? 999 : 2,
                 userSelect: 'none',
