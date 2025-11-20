@@ -55,6 +55,30 @@ import finishedCinnamonRollsImg from '../assets/finished_cinnamon_rolls.png';
 import finishedRedVelvetCupcakesImg from '../assets/finished_redvelvet_cupcakes.png';
 import finishedSprinkleCookiesImg from '../assets/finished_sprinkle_cookies.png';
 
+// recipe definitions
+const RECIPES = {
+  sprinkleCookies: [
+    'butter', 'sugar', 'brownSugar', 'egg1', 'egg2',
+    'egg3', 'egg4', 'flour', 'bakingPowder', 'salt',
+    'vanillaExtract', 'sprinkles'
+  ],
+  redVelvetCupcakes: [
+    'flour', 'sugar', 'brownSugar', 'egg1', 'egg2',
+    'egg3', 'egg4', 'bakingPowder', 'cocoaPowder', 
+    'creamCheese', 'salt', 'vanillaExtract', 'redDye'
+  ],
+  cinnamonRolls: [
+    'flour', 'sugar', 'brownSugar', 'butter', 'egg1',
+    'egg2', 'egg3', 'egg4', 'salt', 'cinnamonSticks',
+    'creamCheese', 'vanillaExtract'
+  ],
+  peppermintBrownies: [
+    'butter', 'sugar', 'brownSugar', 'egg1', 'egg2',
+    'egg3', 'egg4', 'flour', 'cocoaPowder', 'salt', 
+    'vanillaExtract', 'crushedPeppermint', 'peppermintExtract'
+  ],
+};
+
 export default function Game() {
   const mouse = useMousePosition();
   const containerRef = useRef(null);
@@ -146,6 +170,9 @@ export default function Game() {
   // track added ingredients
   const [addedIngredients, setAddedIngredients] = useState([]);
 
+  // which recipe is active
+  const [currentRecipe, setCurrentRecipe] = useState('sprinkleCookies');
+
   // camera movement
   const moveToSection = (newCol, newRow) => {
     const clampedCol = Math.max(0, Math.min(TOTAL_COLS - 1, newCol));
@@ -198,6 +225,14 @@ export default function Game() {
     toggleMouth();
     return () => clearTimeout(timeout);
   }, []);
+
+  // compute missing ingredients for current recipe
+  const recipeList = RECIPES[currentRecipe];
+  const missingIngredients = recipeList.filter(name => ! addedIngredients.includes(name));
+
+  const prettyRecipeName = currentRecipe
+    .replace(/([A-Z])/g, ' $1')
+    .replace(/^./, (c) => c.toUpperCase());
 
   // Convert a local (section-relative) coordinate to world coordinate
   const localToWorld = (i) => {
@@ -365,7 +400,6 @@ export default function Game() {
                 textShadow: '2px 2px 4px black',
               }}
             >
-             
               {/* Section 3: Cat, Mouth, Text Bubble */}
               {sectionNumber === 3 && (
                 <>
@@ -406,6 +440,65 @@ export default function Game() {
                       height: 'auto',
                     }}
                   />
+
+                  {/* Text overlay on the bubble */}
+                  <div
+                    style={{
+                      position: 'absolute',
+                      top: '410px',
+                      left: '50%',
+                      transform: 'translateX(-50%)',
+                      width: '980px',
+                      color: '#1f1f1f',
+                      fontSize: '22px',
+                      lineHeight: 1.3,
+                      textAlign: 'center',
+                      padding: '8px 12px',
+                      pointerEvents: 'none',
+                      userSelect: 'none',
+                    }}
+                  >
+                    <div style={{ fontWeight: 700, marginBottom: 6 }}>
+                      Welcome to Cappachino Cafe!
+                    </div>
+                    <div style={{ marginBottom: 6 }}>
+                      Current Recipe: <strong>{prettyRecipeName}</strong>
+                    </div>
+
+                    {missingIngredients.length > 0 ? (
+                      <div>
+                        <div style={{ marginBottom: 4 }}>
+                          Missing ingredients:
+                        </div>
+                        <div
+                          style={{
+                            display: 'flex',
+                            flexWrap: 'wrap',
+                            gap: '6px 12px',
+                            justifyContent: 'center',
+                          }}
+                        >
+                          {missingIngredients.map((name) => (
+                            <span
+                              key={name}
+                              style={{
+                                background: 'rgba(255, 255, 255, 0.75)',
+                                border: '1px solid rgba(0, 0, 0, 0.1)',
+                                borderRadius: '8px',
+                                padding: '4px 8px',
+                              }}
+                            >
+                              {name}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    ) : (
+                      <div style={{ color: '#106b21', fontWeight: 700 }}>
+                        All ingredients added! 🎉
+                      </div>
+                    )}
+                  </div>
                 </>
               )}
             </div>
@@ -419,7 +512,7 @@ export default function Game() {
           style={{
             position: 'absolute',
             left: bowl.x + ((bowl.section - 1) % TOTAL_COLS) * SECTION_WIDTH,
-            top: bowl.y + Math.floor((bowl.section - 1) / TOTAL_ROWS) * SECTION_HEIGHT,
+            top: bowl.y + Math.floor((bowl.section - 1) / TOTAL_COLS) * SECTION_HEIGHT, // keep grid math consistent
             width: bowl.width,
             height: bowl.height,
           }}
