@@ -73,10 +73,10 @@ export default function Game() {
   const [bowl, setBowl] = useState({
     img: bowlImg,
     section: 2, // middle-left? (since sections are 1..6 laid Left->Right, Top->Bottom)
-    x: SECTION_WIDTH / 2 - 50,
-    y: SECTION_HEIGHT - 150,
-    width: 100,
-    height: 100,
+    x: SECTION_WIDTH / 2 - 135,
+    y: SECTION_HEIGHT - 220,
+    width: 300,
+    height: 200,
   });
 
   // Ingredients (including utensils you want draggable)
@@ -111,9 +111,9 @@ export default function Game() {
       name: 'woodenSpoon',
       img: woodenSpoonImg,
       section: 2,
-      x: SECTION_WIDTH / 2 + 80, // to the right of the bowl
+      x: SECTION_WIDTH / 2 + 160, // to the right of the bowl
       y: SECTION_HEIGHT - 150,
-      width: 100,
+      width: 240,
       height: 100,
       addedToBowl: false,
       draggable: true,
