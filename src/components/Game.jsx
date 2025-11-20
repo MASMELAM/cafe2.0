@@ -132,11 +132,11 @@ export default function Game() {
     { name: 'knife', img: knifeImg, section: 5, x: 900, y: 580, width: 320, height: 80, addedToBowl: false, draggable: true, world: false },
   ]);
 
-  const [col, setCol] = useState(0);
+  const [col, setCol] = useState(2);
   const [row, setRow] = useState(0);
-  const [offsetX, setOffsetX] = useState(0);
+  const [offsetX, setOffsetX] = useState(-2 * SECTION_WIDTH);
   const [offsetY, setOffsetY] = useState(0);
-  const [canMove, setCanMove] = useState(true);
+  const [canMove, setCanMove] = useState(false);
   const [mouthOpenState, setMouthOpenState] = useState(true);
 
   // drag states
@@ -365,7 +365,7 @@ export default function Game() {
                 textShadow: '2px 2px 4px black',
               }}
             >
-              Section {sectionNumber}
+             
               {/* Section 3: Cat, Mouth, Text Bubble */}
               {sectionNumber === 3 && (
                 <>
